@@ -3,7 +3,6 @@ const _ = require('lodash');
 const config = require('../config');
 const logger = require('../util/logger')(__filename);
 
-
 async function createBrowser(opts) {
   const browserOpts = {
     ignoreHTTPSErrors: opts.ignoreHttpsErrors,
@@ -71,12 +70,11 @@ async function render(_opts = {}) {
     opts.pdf.format = undefined;
   }
 
-  logOpts(opts);
+  //logOpts(opts);
 
   const browser = await createBrowser(opts);
   const page = await browser.newPage();
-
-  page.on('console', (...args) => logger.info('PAGE LOG:', ...args));
+  //page.on('console', (...args) => logger.info('PAGE LOG:', ...args));
 
   page.on('error', (err) => {
     logger.error(`Error event emitted: ${err}`);
@@ -106,10 +104,13 @@ async function render(_opts = {}) {
   let data;
   try {
     logger.info('Set browser viewport..');
+
     await page.setViewport(opts.viewport);
+
     if (opts.userAgent) {
       await page.setUserAgent(opts.userAgent);
     }
+
     if (opts.emulateScreenMedia) {
       logger.info('Emulate @media screen..');
       await page.emulateMedia('screen');
@@ -240,14 +241,14 @@ async function scrollPage(page) {
   });
 }
 
-function logOpts(opts) {
-  const supressedOpts = _.cloneDeep(opts);
-  if (opts.html) {
-    supressedOpts.html = '...';
-  }
+// function logOpts(opts) {
+//   const supressedOpts = _.cloneDeep(opts);
+//   if (opts.html) {
+//     supressedOpts.html = '...';
+//   }
 
-  logger.info(`Rendering with opts: ${JSON.stringify(supressedOpts, null, 2)}`);
-}
+//   logger.info(`Rendering with opts: ${JSON.stringify(supressedOpts, null, 2)}`);
+// }
 
 module.exports = {
   render,

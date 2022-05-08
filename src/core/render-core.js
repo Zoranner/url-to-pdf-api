@@ -41,13 +41,13 @@ async function getFullPageHeight(page) {
 async function render(_opts = {}) {
   const opts = _.merge({
     cookies: [],
-    scrollPage: false,
+    scrollPage: true,
     emulateScreenMedia: true,
     ignoreHttpsErrors: false,
     html: null,
     viewport: {
-      width: 1600,
-      height: 1200,
+      width: 800,
+      height: 600,
     },
     goto: {
       waitUntil: 'networkidle0',
@@ -74,7 +74,7 @@ async function render(_opts = {}) {
   //logOpts(opts);
 
   const browser = await createBrowser(opts);
-  const page = await browser.newPage();
+  const page = (await browser.pages())[0];
   //page.on('console', (...args) => logger.info('PAGE LOG:', ...args));
 
   page.on('error', (err) => {

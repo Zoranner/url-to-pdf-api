@@ -62,6 +62,7 @@ async function render(_opts = {}) {
       fullPage: true,
     },
     failEarly: false,
+    userAgent: undefined
   }, _opts);
 
   if ((_.get(_opts, 'pdf.width') && _.get(_opts, 'pdf.height')) || _.get(opts, 'pdf.fullPage')) {
@@ -106,6 +107,9 @@ async function render(_opts = {}) {
   try {
     logger.info('Set browser viewport..');
     await page.setViewport(opts.viewport);
+    if (opts.userAgent) {
+      await page.setUserAgent(opts.userAgent);
+    }
     if (opts.emulateScreenMedia) {
       logger.info('Emulate @media screen..');
       await page.emulateMedia('screen');

@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const _ = require('lodash');
 const config = require('../config');
 const logger = require('../util/logger')(__filename);
+const { PDFDocument } = require('pdf-lib');
 
 async function createBrowser(opts) {
   const browserOpts = {
@@ -177,7 +178,18 @@ async function render(_opts = {}) {
         const height = await getFullPageHeight(page);
         opts.pdf.height = height;
       }
-      data = await page.pdf(opts.pdf);
+      const temp_data = await page.pdf(opts.pdf);
+      //logger.info(temp_data);
+      if (pdf.fullPage) {
+        const document = await PDFDocument.load(temp_data.buffer);
+        if (document.getPageCount() > 1) {
+          document.removePage(1);
+        }
+        data = Buffer.from((await document.save()).buffer);
+      }
+      else {
+        data = temp_data;
+      }
     } else if (opts.output === 'html') {
       data = await page.evaluate(() => document.body.innerHTML);
     } else {

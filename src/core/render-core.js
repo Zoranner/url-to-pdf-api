@@ -214,9 +214,9 @@ async function render(_opts = {}) {
 async function scrollPage(page) {
   // Scroll to page end to trigger lazy loading elements
   await page.evaluate(() => {
-    const scrollInterval = 100;
-    const scrollStep = Math.floor(window.innerHeight / 2);
-    const bottomThreshold = 400;
+    const scrollInterval = 300;
+    const scrollStep = Math.floor(window.innerHeight / 5);
+    // const bottomThreshold = 20;
 
     function bottomPos() {
       return window.pageYOffset + window.innerHeight;
@@ -226,16 +226,16 @@ async function scrollPage(page) {
       function scrollDown() {
         window.scrollBy(0, scrollStep);
 
-        if (document.body.scrollHeight - bottomPos() < bottomThreshold) {
-          window.scrollTo(0, 0);
-          setTimeout(resolve, 500);
+        if (document.body.scrollHeight - bottomPos() <= scrollStep / 2) {
+          //window.scrollTo(0, 0);
+          setTimeout(resolve, scrollInterval);
           return;
         }
 
         setTimeout(scrollDown, scrollInterval);
       }
 
-      setTimeout(reject, 30000);
+      setTimeout(reject, 600000);
       scrollDown();
     });
   });

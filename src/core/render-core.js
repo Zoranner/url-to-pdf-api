@@ -1,10 +1,12 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const stealthPlugin = require('puppeteer-extra-plugin-stealth');
 const _ = require('lodash');
 const config = require('../config');
 const logger = require('../util/logger')(__filename);
 const { PDFDocument } = require('pdf-lib');
 
 async function createBrowser(opts) {
+  puppeteer.use(stealthPlugin());
   const browserOpts = {
     ignoreHTTPSErrors: opts.ignoreHttpsErrors,
     sloMo: config.DEBUG_MODE ? 250 : undefined,

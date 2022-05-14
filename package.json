@@ -34,18 +34,19 @@
     "normalize-url": "^5.0.0",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^5.5.0",
+    "puppeteer": "^13.7.0",
+    "puppeteer-extra-plugin-stealth": "^2.9.0",
     "server-destroy": "^1.0.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "env-cmd": "^9.0.1",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint": "^8.15.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "mocha": "^4.0.1",
-    "nodemon": "^1.12.1",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.16",
     "supertest": "^3.0.0"
   }
 }
